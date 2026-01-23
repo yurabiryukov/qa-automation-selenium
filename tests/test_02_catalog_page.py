@@ -12,7 +12,6 @@ def test_guest_can_get_in_gadgets_page(browser):
     """
     link = 'https://upstore24.ru/collection/all'
     browser.get(link)
-    browser.maximize_window()
 
     cp = CatalogPage(browser)
     cp.select_open_window_close_btn()

@@ -12,7 +12,6 @@ def test_guest_can_get_in_catalog_page(browser):
     """
     link = 'https://upstore24.ru/'
     browser.get(link)
-    browser.maximize_window()
 
     hp = HomePage(browser)
     hp.select_open_window_close_btn()

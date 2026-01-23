@@ -11,5 +11,6 @@ def browser():
     options = Options()
     service = Service(ChromeDriverManager().install())
     browser = webdriver.Chrome(service=service, options=options)
+    browser.maximize_window()
     yield browser
     browser.quit()

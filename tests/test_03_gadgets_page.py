@@ -17,7 +17,6 @@ def test_guest_can_follow_the_whole_purchase_root(browser):
     """
     link = 'https://upstore24.ru/collection/gadgets'
     browser.get(link)
-    browser.maximize_window()
 
     gp = GadgetsPage(browser)
     gp.select_open_window_close_btn()
