@@ -4,7 +4,7 @@ from pages.carts_page import CartsPage
 from pages.order_page import OrderPage
 
 
-allure.description("Test guest can follow the whole purchase root")
+@allure.description("Test guest can follow the whole purchase root")
 def test_guest_can_follow_the_whole_purchase_root(browser):
     """
     В данном тесте мы задаем сортировку по скидке товаров во вкладке 'Гаджеты',
