@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from base.base_class import BasePage
 from selenium.webdriver.common.by import By
@@ -70,13 +71,15 @@ class GadgetsPage(BasePage):
         Основной метод для использования в тестах - открывает вкладку с фильтрами
         и выбирает сортировку 'по скидке'.
         """
-        self.click_filters_btn()
-        self.click_discounts_btn_inside_filter_btn()
+        with allure.step("Select filters"):
+            self.click_filters_btn()
+            self.click_discounts_btn_inside_filter_btn()
 
     def select_item(self):
         """
         Основной метод для использования в тестах - выбирает товар,
         нажимает на кнопки 'В корзину' и 'Открыть корзину'.
         """
-        self.click_item_add_to_cart_btn()
-        self.click_open_the_cart()
+        with allure.step("Select item"):
+            self.click_item_add_to_cart_btn()
+            self.click_open_the_cart()

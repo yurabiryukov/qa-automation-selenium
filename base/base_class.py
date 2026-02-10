@@ -7,7 +7,7 @@ from selenium.common.exceptions import TimeoutException
 
 class BasePage:
     """Базовый класс, содержащий универсальные методы"""
-    open_window_close_btn = "//jdiv[@class='closeIcon__kPp8Y']"
+    open_window_close_btn = "//jdiv[@class='closeIcon__gyaoH']"
 
     def __init__(self, driver):
         self.driver = driver

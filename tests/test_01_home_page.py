@@ -1,7 +1,9 @@
+import allure
 from pages.home_page import HomePage
 from pages.catalog_page import CatalogPage
 
 
+allure.description("Test guest can get in catalog page")
 def test_guest_can_get_in_catalog_page(browser):
     """
     В данном тесте мы находим вкладку 'Каталог' после того,

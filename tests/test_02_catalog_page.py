@@ -1,7 +1,9 @@
+import allure
 from pages.catalog_page import CatalogPage
 from pages.gadgets_page import GadgetsPage
 
 
+allure.description("Test guest can get in gadgets page")
 def test_guest_can_get_in_gadgets_page(browser):
     """
     В данном тесте мы находим вкладку 'Гаджеты' после того,

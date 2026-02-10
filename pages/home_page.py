@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,4 +28,5 @@ class HomePage(BasePage):
 
     def select_catalog_btn(self):
         """Основной метод для использования в тестах - открывает каталог."""
-        self.click_catalog_btn()
+        with allure.step("Select catalog btn"):
+            self.click_catalog_btn()

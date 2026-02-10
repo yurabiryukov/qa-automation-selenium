@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from base.base_class import BasePage
 from selenium.webdriver.common.by import By
@@ -28,4 +29,5 @@ class CatalogPage(BasePage):
 
     def select_gadgets_btn(self):
         """Основной метод для использования в тестах - открывает вкладку 'Гаджеты'."""
-        self.click_gadgets_icon()
+        with allure.step("Select gadgets btn"):
+            self.click_gadgets_icon()

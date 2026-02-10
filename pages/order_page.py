@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from base.base_class import BasePage
 from selenium.webdriver.common.by import By
@@ -39,6 +40,7 @@ class OrderPage(BasePage):
 
     def fill_the_inputs(self):
         """Основной метод для использования в тестах - заполняет поля с именем и телефоном."""
-        self.send_keys_name_input()
-        self.send_keys_phone_input()
+        with allure.step("Fill the inputs"):
+            self.send_keys_name_input()
+            self.send_keys_phone_input()
 

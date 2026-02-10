@@ -1,4 +1,4 @@
-from selenium.common import TimeoutException
+import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -83,19 +83,22 @@ class CartsPage(BasePage):
         Основной метод для использования в тестах - нажимает кнопку
         увеличения числа товара.
         """
-        self.click_add_one_more_item_btn()
+        with allure.step("Select add one more item btn"):
+            self.click_add_one_more_item_btn()
 
     def select_item_delete_btn(self):
         """
         Основной метод для использования в тестах - нажимает кнопку
         удаления товара.
         """
-        self.click_item_delete_btn()
+        with allure.step("Select item delete btn"):
+            self.click_item_delete_btn()
 
     def select_place_an_order_btn(self):
         """
         Основной метод для использования в тестах - нажимает кнопку
         'Оформить заказ'.
         """
-        self.click_place_an_order_btn()
+        with allure.step("Select place an order btn"):
+            self.click_place_an_order_btn()
 
