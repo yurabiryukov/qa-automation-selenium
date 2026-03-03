@@ -6,10 +6,10 @@ from pages.gadgets_page import GadgetsPage
 @allure.description("Test guest can get in gadgets page")
 def test_guest_can_get_in_gadgets_page(browser):
     """
-    В данном тесте мы находим вкладку 'Гаджеты' после того,
-    как оказались во вкладке 'Каталог', и нажимаем на нее,
-    далее проверяем, произошел ли переход, через сравнение атрибута main_word
-    экземпляра класса gp и слова 'Гаджеты' в методе assert_main_word_and_result.
+    В данном тесте происходит нажатие на вкладку 'Гаджеты' после того,
+    как оказались во вкладке 'Каталог', далее проверка, произошел ли переход,
+    через сравнение атрибута main_word экземпляра класса gp и слова 'Гаджеты'
+    в методе assert_main_word_and_result.
     Если тест проходит assert, то выводится принт в консоль и сохраняется скриншот.
     """
     link = 'https://upstore24.ru/collection/all'
