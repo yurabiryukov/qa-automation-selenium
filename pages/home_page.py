@@ -17,14 +17,28 @@ class HomePage(BasePage):
     В тестах используются только select_* методы.
     """
     catalog_btn = "//li[@class='nav-item js-nav-item']//a[text()='Каталог']"
+    auth_btn = "//li[contains(@class, 'nav-hide')]"
 
     def get_catalog_btn(self):
         """Находит и возвращает элемент кнопки 'Каталог'."""
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.catalog_btn)))
 
+    def get_auth_btn(self):
+        """Находит и возвращает элемент кнопки авторизации."""
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.auth_btn)))
+
     def click_catalog_btn(self):
         """Кликает по кнопке 'Каталог'."""
         self.get_catalog_btn().click()
+
+    def click_auth_btn(self):
+        """Кликает по кнопке авторизации."""
+        self.get_auth_btn().click()
+
+    def select_auth_btn(self):
+        """Основной метод для использования в тестах - открывает страницу авторизации."""
+        with allure.step("Select auth btn"):
+            self.click_auth_btn()
 
     def select_catalog_btn(self):
         """Основной метод для использования в тестах - открывает каталог."""
