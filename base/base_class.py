@@ -7,7 +7,8 @@ from selenium.common.exceptions import TimeoutException
 
 class BasePage:
     """Базовый класс, содержащий универсальные методы"""
-    open_window_close_btn = "//jdiv[@class='closeIcon__gyaoH']"
+    open_window_close_btn = "//jdiv[@class='closeIcon__eiV1K']"
+    logo_btn = "//div[contains(@class, 'text-lg-left')]//a[@class='logo']"
 
     def __init__(self, driver):
         self.driver = driver
@@ -23,6 +24,14 @@ class BasePage:
     def get_open_window_close_btn(self):
         """Находит и возвращает элемент кнопки закрытия онлайн чата-поддержки."""
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.open_window_close_btn)))
+
+    def get_logo_btn(self):
+        """Находит и возвращает кнопку лого."""
+        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.logo_btn)))
+
+    def click_logo_btn(self):
+        """Кликает по кнопке лого."""
+        self.get_logo_btn().click()
 
     def select_open_window_close_btn(self, timeout=30):
         """
