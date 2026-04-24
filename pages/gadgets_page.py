@@ -35,7 +35,7 @@ class GadgetsPage(BasePage):
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.filters_btn)))
 
     def get_item_name(self):
-        """Находит и возвращает наименование 3-го элемента по счету во вкладке 'Гаджеты'."""
+        """Находит и возвращает наименование рандомного элемента во вкладке 'Гаджеты'."""
         return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.item_name))).text
 
     def get_all_products_prices(self):
@@ -47,7 +47,7 @@ class GadgetsPage(BasePage):
         return self.driver.find_elements(By.XPATH, self.all_products_names)
 
     def get_item_price(self):
-        """Находит и возвращает стоимость 3-го элемента по счету во вкладке 'Гаджеты'."""
+        """Находит и возвращает стоимость рандомного элемента во вкладке 'Гаджеты'."""
         price_on_website = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.item_price))).text
         price = int(''.join(price_on_website.strip('₽').split(' ')))
         return price
