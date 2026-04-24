@@ -5,7 +5,6 @@ from pages.home_page import HomePage
 
 def test_user_can_authorize(browser: WebDriver, auth_page: AuthPage, home_page: HomePage):
     home_page.visit('https://upstore24.ru/')
-    browser.maximize_window()
 
     home_page.select_open_window_close_btn()
     home_page.click_auth_btn()

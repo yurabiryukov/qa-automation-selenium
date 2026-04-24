@@ -8,7 +8,6 @@ from pages.gadgets_page import GadgetsPage
 def test_guest_can_get_in_gadgets_page(browser: WebDriver, catalog_page: CatalogPage, gadgets_page: GadgetsPage):
 
     catalog_page.visit('https://upstore24.ru/collection/all')
-    browser.maximize_window()
 
     catalog_page.select_open_window_close_btn()
     catalog_page.select_gadgets_btn()

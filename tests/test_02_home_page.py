@@ -14,7 +14,6 @@ def test_guest_can_get_in_catalog_page(
 ):
 
     home_page.visit('https://upstore24.ru/')
-    browser.maximize_window()
     home_page.select_catalog_btn()
 
     catalog_page.assert_main_word_and_result(catalog_page.get_main_word(catalog_page.main_word), 'Каталог')
