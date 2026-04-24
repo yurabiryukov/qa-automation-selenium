@@ -1,4 +1,4 @@
-import allure, time
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -38,19 +38,19 @@ class AuthPage(BasePage):
         """Кликает по кнопке "Войти"."""
         self.get_enter_btn().click()
 
-    def send_keys_email_input(self):
+    def send_keys_email_input(self, email: str):
         """Заполняет поле с почтой."""
         self.get_email_input().clear()
-        self.get_email_input().send_keys('test@test.test')
+        self.get_email_input().send_keys(email)
 
-    def send_keys_password_input(self):
+    def send_keys_password_input(self, password: str):
         """Заполняет поле с паролем."""
         self.get_password_input().clear()
-        self.get_password_input().send_keys('123456789')
+        self.get_password_input().send_keys(password)
 
-    def fill_the_inputs(self):
+    def fill_the_inputs(self, email: str, password: str):
         """Основной метод для использования в тестах - заполняет поля с почтой и паролем и нажимает 'Войти'."""
         with allure.step("Fill the inputs"):
-            self.send_keys_email_input()
-            self.send_keys_password_input()
+            self.send_keys_email_input(email)
+            self.send_keys_password_input(password)
             self.click_enter_btn()

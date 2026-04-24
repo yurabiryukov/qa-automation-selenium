@@ -1,23 +1,40 @@
-import time, allure, pytest
+import allure, time
+from selenium.webdriver.chrome.webdriver import WebDriver
 from pages.gadgets_page import GadgetsPage
+from pages.carts_page import CartsPage
 
 
-@pytest.mark.parametrize("brand, color, brand_locator, color_locator", GadgetsPage.get_test_params())
-@allure.description("Test guest can deal with filters")
-def test_guest_can_deal_with_filters(browser, brand, color, brand_locator, color_locator):
-    """В данном тесте проверяется работа фильтров: цена, бренд, цвет."""
-    link = 'https://upstore24.ru/collection/gadgets'
-    browser.get(link)
-    browser.maximize_window()
+@allure.description("Test user can add gadget to cart")
+def test_user_can_add_gadget_to_cart(
+        browser: WebDriver,
+        gadgets_page: GadgetsPage,
+        carts_page: CartsPage
+):
 
-    gp = GadgetsPage(browser)
-    gp.select_open_window_close_btn()
-    gp.select_filters()
+    gadgets_page.visit('https://upstore24.ru/collection/gadgets')
+
+    gadgets_page.select_open_window_close_btn()
+    # Сохраняем наименование и стоимость товара со страницы с гаджетами для сравнения с корзиной
+    name_on_gadget_page = gadgets_page.get_item_name()
+    price_on_gadget_page = gadgets_page.get_item_price()
+    gadgets_page.select_item_and_follow_to_cart()
+
+    carts_page.assert_main_word_and_result(carts_page.get_main_word(carts_page.main_word), 'Корзина')
+    print('Мы в корзине!')
+    carts_page.get_screenshot()
+
+    assert carts_page.get_name_of_the_item_in_cart() == name_on_gadget_page
+    print('Проверка на совпадение имен пройдена!')
+
+    price = carts_page.get_price_of_the_item_in_cart()
+    assert price == price_on_gadget_page
+    print('Цены одинаковые!')
+
+def test_user_can_deal_with_filters(browser: WebDriver, gadgets_page: GadgetsPage):
+
+    gadgets_page.visit('https://upstore24.ru/collection/gadgets')
+
+    gadgets_page.select_filters()
     time.sleep(3)
-    gp.check_the_list_is_ascending()
-    gp.get_screenshot()
+    gadgets_page.check_the_list_is_ascending()
 
-    gp.select_checkbox_filters(brand_locator, color_locator)
-    time.sleep(3)
-    gp.check_filters_work_as_expected(brand, color)
-    gp.get_screenshot()

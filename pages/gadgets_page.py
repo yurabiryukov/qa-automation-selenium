@@ -1,4 +1,4 @@
-import allure
+import allure, random
 from selenium.webdriver.support.wait import WebDriverWait
 from base.base_class import BasePage
 from selenium.webdriver.common.by import By
@@ -17,36 +17,18 @@ class GadgetsPage(BasePage):
 
     В тестах используются select_* и check_* методы.
     """
+
+    item_number = random.randint(1, 30)
     main_word = "//h1[text()='Гаджеты']"
     filters_btn = "//select[@class='js-filter-sort input--sort']"
     ascending_price_btn_inside_filter_btn = "//option[@value='price']"
-    item_add_to_cart_btn = "//div[contains(@class, 'col-lg-4')][3]//button[contains(@class, 'button--empty--inverse')]"
+    item_add_to_cart_btn = f"//div[contains(@class, 'col-lg-4')][{item_number}]//button[contains(@class, 'button--empty--inverse')]"
     open_the_cart = "//a[@class='button button--primary button--block button--large']"
-    item_name = "//div[@class='col-6 col-sm-6 col-md-4 col-lg-4'][3]//div[@class='product_card-title']//a"
-    item_price = "//div[contains(@class, 'col-lg-4')][3]//span[contains(@class, 'product_card-price')]"
+    item_name = f"//div[@class='col-6 col-sm-6 col-md-4 col-lg-4'][{item_number}]//div[@class='product_card-title']//a"
+    item_price = f"//div[contains(@class, 'col-lg-4')][{item_number}]//span[contains(@class, 'product_card-price')]"
     all_products_prices = "//span[contains(@class, 'product_card-price')]"
     all_products_names = "//div[@class='product_card-title']"
-    filters_checkbox_locators = {
-        'brand': {
-            'Apple': "//label[text()='Apple']",
-            'Dyson': "//label[text()='Dyson']",
-            'Dreame': "//label[text()='Dreame']"
-        },
-        'color': {
-            ('Белый', 'White'): "//label[text()='Белый']",
-            ('Черный', 'Black'): "//label[text()='Черный']",
-            ('Никель / Медный', 'Nickel / Copper'): "//label[text()='Никель / Медный']"
-        }
-    }
-
-    @classmethod
-    def get_test_params(cls):
-        return [(brand_name, color_tuple, brand_locator, color_locator)
-                for brand_name, brand_locator in cls.filters_checkbox_locators['brand'].items()
-                for color_tuple, color_locator in cls.filters_checkbox_locators['color'].items()]
-
-    def get_brand_color_filters(self, brand, color):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, brand))), WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, color)))
+    make_an_order_btn = "//a[@class='button button--secondary button--block button--large']"
 
     def get_filters_btn(self):
         """Находит и возвращает элемент кнопки с фильтрами."""
@@ -78,9 +60,59 @@ class GadgetsPage(BasePage):
         """Находит и возвращает элемент кнопки добавить в корзину."""
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.item_add_to_cart_btn)))
 
+    def get_make_an_order_btn(self):
+        """Находит и возвращает элемент кнопки оформить заказ."""
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.make_an_order_btn)))
+
     def get_ascending_price_btn_inside_filter_btn(self):
         """Находит кнопку фильтра 'Возрастанию цены' в выпадающем списке."""
         return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.ascending_price_btn_inside_filter_btn)))
+
+    def click_filters_btn(self):
+        """Кликает по кнопке с фильтрами."""
+        self.get_filters_btn().click()
+
+    def click_open_the_cart(self):
+        """Кликает по кнопке 'Открыть корзину'."""
+        self.get_open_the_cart().click()
+
+    def click_make_an_order(self):
+        """Кликает по кнопке 'Оформить заказ'."""
+        self.get_make_an_order_btn().click()
+
+    def click_item_add_to_cart_btn(self):
+        """Кликает по кнопке 'В корзину'."""
+        self.get_item_add_to_cart_btn().click()
+
+    def click_ascending_price_btn_inside_filter_btn(self):
+        """Кликает по кнопке 'Возрастанию цены' в выпадающем списке."""
+        self.get_ascending_price_btn_inside_filter_btn().click()
+
+    def select_item_and_follow_to_cart(self):
+        """
+        Основной метод для использования в тестах - выбирает товар,
+        нажимает на кнопки 'В корзину' и 'Открыть корзину'.
+        """
+        with allure.step("Select item and follow to cart"):
+            self.click_item_add_to_cart_btn()
+            self.click_open_the_cart()
+
+    def select_item_and_follow_to_order_page(self):
+        """
+        Основной метод для использования в тестах - выбирает товар,
+        нажимает на кнопки 'В корзину' и 'Оформить заказ'.
+        """
+        with allure.step("Select item and follow to order page"):
+            self.click_item_add_to_cart_btn()
+            self.click_make_an_order()
+
+    def select_filters(self):
+        """
+        Основной метод для использования в тестах - выбирает сортировку по возрастанию цены.
+        """
+        with allure.step("Select item and follow to order page"):
+            self.click_filters_btn()
+            self.click_ascending_price_btn_inside_filter_btn()
 
     def check_the_list_is_ascending(self):
         """Проверка, что все цены в списке первых 30 товаров действительно по возрастанию."""
@@ -92,63 +124,3 @@ class GadgetsPage(BasePage):
                 n = price
         assert n == list_of_prices[-1], 'Фильтр не работает'
         print("Фильтр цены по 'По возрастанию' отработал корректно")
-
-    def check_filters_work_as_expected(self, brand, color):
-        """Проверка, что все товары после применения фильтров соответствуют фильтрам."""
-        names = self.get_all_products_names()
-        assert len(names) > 0, f'Нет товаров после применения фильтров: бренд - {brand}, цвет - {color}'
-        list_of_names = [name.text for name in names]
-        for name in list_of_names:
-            flag = False
-            assert brand in name, f'Наименование товара не содержит выбранный бренд - {brand}'
-            for c in color:
-                if c in name:
-                    flag = True
-            assert flag, f'Наименование товара не содержит выбранный цвет - {color}'
-        print(f"По фильтру: бренд - {brand}, цвет - {color} количество товаров - {len(names)}")
-
-    def click_filters_btn(self):
-        """Кликает по кнопке с фильтрами."""
-        self.get_filters_btn().click()
-
-    def click_brand_color_filters(self, brand, color):
-        """Кликает по чекбоксам с фильтрами."""
-        self.get_brand_color_filters(brand, color)[0].click()
-        self.get_brand_color_filters(brand, color)[1].click()
-
-    def click_open_the_cart(self):
-        """Кликает по кнопке 'Открыть корзину'."""
-        self.get_open_the_cart().click()
-
-    def click_item_add_to_cart_btn(self):
-        """Кликает по кнопке 'В корзину'."""
-        self.get_item_add_to_cart_btn().click()
-
-    def click_ascending_price_btn_inside_filter_btn(self):
-        """Кликает по кнопке 'Возрастанию цены' в выпадающем списке."""
-        self.get_ascending_price_btn_inside_filter_btn().click()
-
-    def select_filters(self):
-        """
-        Основной метод для использования в тестах - открывает вкладку с фильтрами
-        и выбирает сортировку 'Возрастанию цены'.
-        """
-        with allure.step("Select filters"):
-            self.click_filters_btn()
-            self.click_ascending_price_btn_inside_filter_btn()
-
-    def select_checkbox_filters(self, brand_locator, color_locator):
-        """
-        Основной метод для использования в тестах - применяет фильтры по бренду и цвету товара.
-        """
-        with allure.step("Select checkbox filters"):
-            self.click_brand_color_filters(brand_locator, color_locator)
-
-    def select_item(self):
-        """
-        Основной метод для использования в тестах - выбирает товар,
-        нажимает на кнопки 'В корзину' и 'Открыть корзину'.
-        """
-        with allure.step("Select item"):
-            self.click_item_add_to_cart_btn()
-            self.click_open_the_cart()

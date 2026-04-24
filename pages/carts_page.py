@@ -2,6 +2,7 @@ import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+
 from base.base_class import BasePage
 
 
@@ -20,10 +21,11 @@ class CartsPage(BasePage):
     name_of_the_item_in_cart = "//div[@class='cart-item-title']//a"
     price_of_the_item_in_cart = "//span[contains(@class, 'js-cart-order-total_price')]"
     add_one_more_item_btn = "//div[@class='col col-auto'][2]//button[contains(@class, 'button--medium')]"
-    amount_of_item = "//input[@class='input input--counter input--medium']"
+    amount_of_item_via_ui = "//input[@class='input input--counter input--medium']"
     item_delete_btn = "//button[@class='button button--empty button--icon button--medium button--remove']"
     empty_cart_text_after_deleting_item = "//div[contains(@class, 'insales-section-cart')]//div[contains(@class, 'text-center')]"
-    place_an_order_btn = "//input[@value='Оформить заказ']"
+    make_an_order_btn = "//input[@value='Оформить заказ']"
+    amount_of_item_via_backend_logic = 1
 
     def get_empty_cart_text_after_deleting_item(self):
         """Находит и возвращает элемент с надписью, что корзина пуста."""
@@ -31,7 +33,7 @@ class CartsPage(BasePage):
 
     def get_item_delete_btn(self):
         """Находит и возвращает элемент удаления позиции с корзины."""
-        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.item_delete_btn)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.item_delete_btn)))
 
     def get_name_of_the_item_in_cart(self):
         """Находит и возвращает наименование элемента в корзине."""
@@ -43,28 +45,28 @@ class CartsPage(BasePage):
         price = int(''.join(price_on_website.strip('₽').split(' ')))
         return price
 
-    def get_price_of_the_item_in_cart_after_increasing_amount(self):
+    def get_price_of_the_item_in_cart_after_increasing_amount(self) -> bool:
         """Находит и возвращает стоимость элемента в корзине после увеличения количества товара."""
-        new_price = self.get_price_of_the_item_in_cart() * 2
+        new_price = self.get_price_of_the_item_in_cart() * self.get_amount_of_item()
         if new_price < 100000:
             new_price_as_str = str(new_price)[:2] + ' ' + str(new_price)[2:] + ' ₽'
         elif 100000 <= new_price < 1000000:
             new_price_as_str = str(new_price)[:3] + ' ' + str(new_price)[3:] + ' ₽'
 
-        WebDriverWait(self.driver, 30).until(EC.text_to_be_present_in_element((By.XPATH, self.price_of_the_item_in_cart), new_price_as_str))
+        return WebDriverWait(self.driver, 30).until(EC.text_to_be_present_in_element((By.XPATH, self.price_of_the_item_in_cart), new_price_as_str))
 
     def get_add_one_more_item_btn(self):
         """Находит и возвращает элемент кнопки увеличения числа товара на 1."""
-        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.add_one_more_item_btn)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.add_one_more_item_btn)))
 
     def get_amount_of_item(self):
         """Находит и возвращает количество товара в корзине."""
-        element = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.amount_of_item)))
-        return element.get_attribute('value')
+        element = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.amount_of_item_via_ui)))
+        return int(element.get_attribute('value'))
 
-    def get_place_an_order_btn(self):
+    def get_make_an_order_btn(self):
         """Находит и возвращает элемент кнопки 'Оформить заказ'."""
-        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.place_an_order_btn)))
+        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.make_an_order_btn)))
 
     def click_add_one_more_item_btn(self):
         """Кликает по кнопке увеличения числа товара."""
@@ -74,9 +76,9 @@ class CartsPage(BasePage):
         """Кликает по кнопке удаления товара."""
         self.get_item_delete_btn().click()
 
-    def click_place_an_order_btn(self):
+    def click_make_an_order_btn(self):
         """Кликает по кнопке 'Оформить заказ'."""
-        self.get_place_an_order_btn().click()
+        self.get_make_an_order_btn().click()
 
     def select_add_one_more_item_btn(self):
         """
@@ -85,6 +87,7 @@ class CartsPage(BasePage):
         """
         with allure.step("Select add one more item btn"):
             self.click_add_one_more_item_btn()
+            self.amount_of_item_via_backend_logic += 1
 
     def select_item_delete_btn(self):
         """
@@ -94,11 +97,11 @@ class CartsPage(BasePage):
         with allure.step("Select item delete btn"):
             self.click_item_delete_btn()
 
-    def select_place_an_order_btn(self):
+    def select_make_an_order_btn(self):
         """
         Основной метод для использования в тестах - нажимает кнопку
         'Оформить заказ'.
         """
-        with allure.step("Select place an order btn"):
-            self.click_place_an_order_btn()
+        with allure.step("Select make an order btn"):
+            self.click_make_an_order_btn()
 
