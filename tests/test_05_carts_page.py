@@ -1,9 +1,10 @@
-import allure
+import allure, pytest
 from selenium.webdriver.chrome.webdriver import WebDriver
 from pages.carts_page import CartsPage
 from pages.gadgets_page import GadgetsPage
 
 
+@pytest.mark.smoke
 @allure.description("Test info in carts is correct")
 def test_info_in_carts_is_correct(browser_with_added_item_in_cart: WebDriver, gadgets_page: GadgetsPage, carts_page_with_items_in_it: CartsPage):
 
@@ -15,5 +16,5 @@ def test_info_in_carts_is_correct(browser_with_added_item_in_cart: WebDriver, ga
 
     carts_page_with_items_in_it.select_item_delete_btn()
     assert carts_page_with_items_in_it.get_empty_cart_text_after_deleting_item().text == 'В вашей корзине пока пусто'
-    print('Корзина была очищена!')
+    print('Корзина была очищена')
     carts_page_with_items_in_it.get_screenshot()

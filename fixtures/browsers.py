@@ -8,6 +8,16 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
+@pytest.fixture
+def fresh_browser():
+    """Фикстура для инициализации браузера Chrome."""
+    options = Options()
+    service = Service(ChromeDriverManager().install())
+    browser = webdriver.Chrome(service=service, options=options)
+    browser.maximize_window()
+    yield browser
+    browser.quit()
+
 @pytest.fixture(scope='session')
 def browser():
     """Фикстура для инициализации браузера Chrome."""

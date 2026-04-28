@@ -81,27 +81,18 @@ class CartsPage(BasePage):
         self.get_make_an_order_btn().click()
 
     def select_add_one_more_item_btn(self):
-        """
-        Основной метод для использования в тестах - нажимает кнопку
-        увеличения числа товара.
-        """
+        """Нажимает кнопку увеличения числа товара."""
         with allure.step("Select add one more item btn"):
             self.click_add_one_more_item_btn()
             self.amount_of_item_via_backend_logic += 1
 
     def select_item_delete_btn(self):
-        """
-        Основной метод для использования в тестах - нажимает кнопку
-        удаления товара.
-        """
+        """Нажимает кнопку удаления товара."""
         with allure.step("Select item delete btn"):
             self.click_item_delete_btn()
 
     def select_make_an_order_btn(self):
-        """
-        Основной метод для использования в тестах - нажимает кнопку
-        'Оформить заказ'.
-        """
+        """Нажимает кнопку 'Оформить заказ'."""
         with allure.step("Select make an order btn"):
             self.click_make_an_order_btn()
 

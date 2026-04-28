@@ -14,13 +14,19 @@ class AuthPage(BasePage):
     - send_keys_* - заполняют поля
     - click_* - совершают клики
     - fill_* - выполняют последовательности действий
+    - check_* - проверки
 
-    В тестах используется fill_* метод.
+    В тестах используются fill_*, check_* методы.
     """
     email_input = "//input[@id='email']"
     password_input = "//input[@id='password']"
     main_word = "//h1[contains(@class, 'co-title--h1')]"
     enter_btn = "//button[contains(@class, 'js-co-login-submit')]"
+    error_msg = "//div[contains(@class, 'co-notice--danger')]"
+
+    def get_error_msg(self):
+        """Находит и возвращает сообщение об ошибке."""
+        return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, self.error_msg))).text
 
     def get_email_input(self):
         """Находит и возвращает поле с почтой на странице авторизации."""
@@ -49,8 +55,12 @@ class AuthPage(BasePage):
         self.get_password_input().send_keys(password)
 
     def fill_the_inputs(self, email: str, password: str):
-        """Основной метод для использования в тестах - заполняет поля с почтой и паролем и нажимает 'Войти'."""
+        """Заполняет поля с почтой и паролем и нажимает 'Войти'."""
         with allure.step("Fill the inputs"):
             self.send_keys_email_input(email)
             self.send_keys_password_input(password)
             self.click_enter_btn()
+
+    def check_error_msg(self):
+        """Проверяет сообщение об ошибке."""
+        return self.get_error_msg()

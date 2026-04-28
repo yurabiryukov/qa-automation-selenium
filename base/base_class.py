@@ -19,7 +19,7 @@ class BasePage:
     def get_main_word(self, main_word):
         """
         Здесь в main_word передается одноименный атрибут каждого класса страницы,
-        далее по этому 'ключевому' слову будет происходить сравнение:
+        далее по этому 'ключевому' слову будет происходить сравнение -
         на ту ли страницу случился переход.
         """
         return WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, main_word))).text
@@ -38,7 +38,7 @@ class BasePage:
 
     def select_open_window_close_btn(self, timeout=30):
         """
-        Основной метод для использования в тестах - закрывает окно с чатом-поддержки, если
+        Закрывает окно с чатом-поддержки, если
         мы заходим на сайт в рабочее время поддержки (с 10 до 20:30 мск),
         либо продолжает работу скрипта без закрытия окна.
         """
@@ -56,7 +56,7 @@ class BasePage:
         assert main_word == result
 
     def get_screenshot(self):
-        """Сохраняет скриншот"""
+        """Сохраняет скриншот."""
         now_date = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
         test_file = os.path.basename(sys._getframe().f_back.f_code.co_filename)
         test_filename = os.path.splitext(test_file)[0]

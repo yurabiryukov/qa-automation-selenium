@@ -36,11 +36,11 @@ class HomePage(BasePage):
         self.get_auth_btn().click()
 
     def select_auth_btn(self):
-        """Основной метод для использования в тестах - открывает страницу авторизации."""
+        """Открывает страницу авторизации."""
         with allure.step("Select auth btn"):
             self.click_auth_btn()
 
     def select_catalog_btn(self):
-        """Основной метод для использования в тестах - открывает каталог."""
+        """Открывает каталог."""
         with allure.step("Select catalog btn"):
             self.click_catalog_btn()

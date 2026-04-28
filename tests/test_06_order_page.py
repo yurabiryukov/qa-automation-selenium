@@ -1,9 +1,10 @@
-import allure
+import allure, pytest
 from selenium.webdriver.chrome.webdriver import WebDriver
 from pages.gadgets_page import GadgetsPage
 from pages.order_page import OrderPage
 
 
+@pytest.mark.smoke
 @allure.description("Test user can make order")
 def test_user_can_make_order(browser: WebDriver, gadgets_page: GadgetsPage, order_page: OrderPage):
 

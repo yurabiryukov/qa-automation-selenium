@@ -99,8 +99,7 @@ class GadgetsPage(BasePage):
 
     def select_item_and_follow_to_order_page(self):
         """
-        Основной метод для использования в тестах - выбирает товар,
-        нажимает на кнопки 'В корзину' и 'Оформить заказ'.
+        Выбирает товар, нажимает на кнопки 'В корзину' и 'Оформить заказ'.
         """
         with allure.step("Select item and follow to order page"):
             self.click_item_add_to_cart_btn()
@@ -108,7 +107,7 @@ class GadgetsPage(BasePage):
 
     def select_filters(self):
         """
-        Основной метод для использования в тестах - выбирает сортировку по возрастанию цены.
+        Выбирает сортировку по возрастанию цены.
         """
         with allure.step("Select item and follow to order page"):
             self.click_filters_btn()

@@ -8,12 +8,12 @@ from pages.order_page import OrderPage
 
 
 @pytest.fixture
-def auth_page(browser):
-    return AuthPage(browser)
+def auth_page(fresh_browser):
+    return AuthPage(fresh_browser)
 
 @pytest.fixture
-def home_page(browser):
-    return HomePage(browser)
+def home_page(fresh_browser):
+    return HomePage(fresh_browser)
 
 @pytest.fixture
 def catalog_page(browser):

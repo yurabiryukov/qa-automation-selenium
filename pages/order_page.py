@@ -13,8 +13,9 @@ class OrderPage(BasePage):
     - get_* - находят элементы
     - send_keys_* - заполняют поля
     - fill_* - выполняют последовательности действий
+    - check_* - проверки
 
-    В тестах используется только fill_* метод.
+    В тестах используется только fill_* и check_* методы.
     """
 
     main_word = "//a[@class='link js-modal-toggler']"
@@ -85,17 +86,18 @@ class OrderPage(BasePage):
         self.get_phone_input().send_keys(phone)
 
     def check_fill_the_inputs_form(self, name, phone):
-        """Основной метод для использования в тестах - заполняет поля с именем и телефоном."""
+        """Заполняет поля с именем и телефоном."""
         with allure.step("Check fill the inputs form"):
             self.send_keys_name_input(name)
             self.send_keys_phone_input(phone)
 
     def check_create_order_button_is_clickable(self):
-        """Основной метод для использования в тестах - проверяет доступность кнопки "Подтвердить заказ"."""
+        """Проверяет доступность кнопки "Подтвердить заказ"."""
         with allure.step("Check create order button is clickable"):
             self.get_create_order_button()
 
     def check_is_total_price_correct(self, is_delivery: bool = False):
+        """Проверяет корректность итоговой стоимости с/без доставки."""
         if is_delivery:
             self.click_delivery_button()
             prices = self.get_all_products_prices()
@@ -108,7 +110,7 @@ class OrderPage(BasePage):
             assert list_of_prices == self.get_total_price()
 
     def check_personal_data_checkbox_is_clickable(self):
-        """Основной метод для использования в тестах - проверяет нажатие чекбокса с персональными данными."""
+        """Проверяет нажатие чекбокса с персональными данными."""
         with allure.step("Check personal data checkbox is clickable"):
             self.click_personal_data_checkbox()
 

@@ -1,9 +1,10 @@
-import allure, time
+import allure, time, pytest
 from selenium.webdriver.chrome.webdriver import WebDriver
 from pages.gadgets_page import GadgetsPage
 from pages.carts_page import CartsPage
 
 
+@pytest.mark.smoke
 @allure.description("Test user can add gadget to cart")
 def test_user_can_add_gadget_to_cart(
         browser: WebDriver,
@@ -20,21 +21,22 @@ def test_user_can_add_gadget_to_cart(
     gadgets_page.select_item_and_follow_to_cart()
 
     carts_page.assert_main_word_and_result(carts_page.get_main_word(carts_page.main_word), 'Корзина')
-    print('Мы в корзине!')
+    print('Корзина открыта')
     carts_page.get_screenshot()
 
     assert carts_page.get_name_of_the_item_in_cart() == name_on_gadget_page
-    print('Проверка на совпадение имен пройдена!')
+    print('Проверка на совпадение имен пройдена')
 
     price = carts_page.get_price_of_the_item_in_cart()
     assert price == price_on_gadget_page
-    print('Цены одинаковые!')
+    print('Цены одинаковые')
 
+@pytest.mark.regression
 def test_user_can_deal_with_filters(browser: WebDriver, gadgets_page: GadgetsPage):
 
     gadgets_page.visit('https://upstore24.ru/collection/gadgets')
 
     gadgets_page.select_filters()
-    time.sleep(3)
+    time.sleep(2)
     gadgets_page.check_the_list_is_ascending()
 
