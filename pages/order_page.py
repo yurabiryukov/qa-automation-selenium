@@ -75,17 +75,17 @@ class OrderPage(BasePage):
         """Нажимает по чекбоксу с персональными данными."""
         self.get_personal_data_checkbox().click()
 
-    def send_keys_name_input(self, name):
+    def send_keys_name_input(self, name: str):
         """Заполняет поле именем."""
         self.get_name_input().clear()
         self.get_name_input().send_keys(name)
 
-    def send_keys_phone_input(self, phone):
+    def send_keys_phone_input(self, phone: str):
         """Заполняет поле с номером телефона."""
         self.get_phone_input().clear()
         self.get_phone_input().send_keys(phone)
 
-    def check_fill_the_inputs_form(self, name, phone):
+    def check_fill_the_inputs_form(self, name: str, phone: str):
         """Заполняет поля с именем и телефоном."""
         with allure.step("Check fill the inputs form"):
             self.send_keys_name_input(name)

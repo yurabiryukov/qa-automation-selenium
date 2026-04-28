@@ -16,7 +16,7 @@ class BasePage:
     def visit(self, url):
         self.driver.get(url)
 
-    def get_main_word(self, main_word):
+    def get_main_word(self, main_word: str):
         """
         Здесь в main_word передается одноименный атрибут каждого класса страницы,
         далее по этому 'ключевому' слову будет происходить сравнение -
@@ -48,7 +48,7 @@ class BasePage:
         except TimeoutException:
             print(f"Окно чата не появилось за {timeout} сек (возможно, нерабочее время поддержки)")
 
-    def assert_main_word_and_result(self, main_word, result):
+    def assert_main_word_and_result(self, main_word: str, result: str):
         """
         В main_word будет одноименный атрибут каждого класса, в result - строка - какое-то слово
         или фраза с той страницы, на которую произошел переход.

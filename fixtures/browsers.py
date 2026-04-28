@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -29,7 +30,7 @@ def browser():
     browser.quit()
 
 @pytest.fixture
-def browser_with_added_item_in_cart(browser):
+def browser_with_added_item_in_cart(browser: WebDriver):
     """Фикстура для инициализации браузера Chrome для добавления товара в корзину."""
     driver = browser
 

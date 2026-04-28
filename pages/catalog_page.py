@@ -56,14 +56,14 @@ class CatalogPage(BasePage):
         with allure.step("Select gadgets button"):
             self.click_gadgets_icon()
 
-    def fill_search_field(self, product_name):
+    def fill_search_field(self, product_name: str):
         """Производит поиск товара."""
         with allure.step("Fill search field"):
             self.click_search_field()
             self.remove_value_in_search()
             self.get_search_field().send_keys(product_name)
 
-    def check_search_works_as_expected(self, product_name):
+    def check_search_works_as_expected(self, product_name: str):
         """Проверка результатов поиска."""
         try:
             elements = self.get_elements_in_search_suggestions()
