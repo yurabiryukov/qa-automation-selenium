@@ -7,7 +7,13 @@ from pages.home_page import HomePage
 @pytest.mark.parametrize('email, password', (('test@test.test', '123456789'), ('user@user.user', 'password')))
 @pytest.mark.authorization
 @pytest.mark.smoke
-def test_user_can_authorize(fresh_browser: WebDriver, auth_page: AuthPage, home_page: HomePage, email: str, password: str):
+def test_user_can_authorize(
+        fresh_browser: WebDriver,
+        auth_page: AuthPage,
+        home_page: HomePage,
+        email: str,
+        password: str
+):
     home_page.visit('https://upstore24.ru/')
 
     home_page.click_auth_btn()
