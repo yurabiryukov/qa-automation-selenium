@@ -17,6 +17,5 @@ def test_user_can_authorize(fresh_browser: WebDriver, auth_page: AuthPage, home_
         auth_page.assert_main_word_and_result(auth_page.get_main_word(auth_page.main_word), 'История заказов')
         print('Вход в учетную запись!')
     except Exception:
-        print(auth_page.check_error_msg())
         assert auth_page.check_error_msg() == 'Сочетание логина и пароля не подходит'
 
